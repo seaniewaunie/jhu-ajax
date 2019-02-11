@@ -45,6 +45,7 @@ body {
 .menuItem:hover {
   overflow-y: scroll;
   cursor: ns-resize;
+  -webkit-overflow-scrolling: touch;
 }
 
 #chicken {
