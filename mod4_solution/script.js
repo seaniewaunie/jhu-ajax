@@ -77,12 +77,14 @@ WARNING!!! WARNING!!!
   //3.b. for JHU Course
   console.log("**** 3B ****");
   var intiialValue = {hello: [], bye: []};
+
   const reducer = (names, name) => {
     name.charAt(0).toLowerCase() === 'j' ?
       intiialValue.bye.push(byeSpeaker.speakSimple(name)) : intiialValue.hello.push(helloSpeaker.speakSimple(name));
   }
 
-  names.reduce(reducer);
+  names.reduce(reducer, names[0]);
+
   for(var i in intiialValue.hello){
     console.log(intiialValue.hello[i]);
   }
