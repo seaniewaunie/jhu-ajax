@@ -10,19 +10,21 @@
   function ToBuyController ($scope, ShoppingListCheckOffService) {
     var toBuyController = this;
 
+    $scope.quantity = 0;
+
     toBuyController.getToBuyList = function(){
       return ShoppingListCheckOffService.getToBuyList();
     }
     toBuyController.isToBuyListEmpty = function(){
       return ShoppingListCheckOffService.isToBuyListEmpty();
     }
-    toBuyController.buy = function(itemIndex){
-      return ShoppingListCheckOffService.buy(itemIndex);
+    toBuyController.buy = function(itemIndex, quantity){
+      return ShoppingListCheckOffService.buy(itemIndex, quantity);
     }
   }
 
-  AlreadyBoughtController.$inject= ["$scope", "ShoppingListCheckOffService"];
-  function AlreadyBoughtController ($scope, ShoppingListCheckOffService) {
+  AlreadyBoughtController.$inject= ["$scope", "$filter", "ShoppingListCheckOffService"];
+  function AlreadyBoughtController ($scope, $filter, ShoppingListCheckOffService) {
     var alreadyBoughtController = this;
 
     alreadyBoughtController.getBoughtList = function(){
@@ -37,15 +39,20 @@
     var service = this;
 
     var toBuyList = [
-      {name: "cookies", quantity: 10},
-      {name: "soda bottles", quantity: 10},
-      {name: "yum yums", quantity: 100},
+      {name: "cookies", pricePerItem: 0.2},
+      {name: "soda bottles", pricePerItem: 1},
+      {name: "yum yums", pricePerItem: 10},
     ];
 
     var boughtList = [];
 
-    service.buy = function(itemIndex) {
-      boughtList.push(toBuyList[itemIndex]);
+    service.buy = function(itemIndex, quantity) {
+      toBuyList[itemIndex].quantity = quantity;
+      var boughtItem = {
+        ...toBuyList[itemIndex],
+        totalPrice: toBuyList[itemIndex].quantity * toBuyList[itemIndex].pricePerItem
+      };
+      boughtList.push(boughtItem);
       toBuyList.splice(itemIndex, 1);
     }
 
