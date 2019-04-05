@@ -42,6 +42,8 @@
       {name: "cookies", pricePerItem: 0.2},
       {name: "soda bottles", pricePerItem: 1},
       {name: "yum yums", pricePerItem: 10},
+      {name: "scrumptious goodness", pricePerItem: 20},
+      {name: "apples", pricePerItem: 5},
     ];
 
     var boughtList = [];
