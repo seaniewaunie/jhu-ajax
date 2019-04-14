@@ -1,9 +1,12 @@
 <div class="foundItems">
   <h3>List of Found Items</h3>
-  <ol>
+  <ul>
     <li ng-repeat="item in list.items">
       {{item.name}}
       <button ng-click="list.onRemove({index: $index});">Don't want this one!</button>
     </li>
-  </ol>
+  </ul>
 </div>
+<p class="nothingFound">
+  Nothing found!
+</p>

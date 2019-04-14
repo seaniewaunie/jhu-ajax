@@ -26,13 +26,33 @@ function FoundItemsDirective() {
 
 
 function FoundItemsDirectiveLink(scope, element, attrs, controller) {
+  scope.$watch('list.emptyList()', function(newValue, oldValue) {
+    if(newValue === true){
+      displayNothingFound();
+    }
+    else{
+      removeNothingFound();
+    }
+  });
 
+  function displayNothingFound(){
+    var nothingFoundElem = element.find("p");
+    nothingFoundElem.css('display', 'block');
+  }
+
+  function removeNothingFound(){
+    var nothingFoundElem = element.find("p");
+    nothingFoundElem.css('display', 'none');
+  }
 }
 
 
 function FoundItemsDirectiveController() {
   var list = this;
 
+  list.emptyList = function(){
+    return (list.items === undefined || list.items.length === 0);
+  }
 }
 
 
@@ -61,6 +81,7 @@ function MenuSearchService($http, ApiBasePath) {
   var service = this;
 
   service.getMatchedMenuItems = function(query) {
+
     return $http({
       method: "GET",
       url: (ApiBasePath + "/categories.json")
@@ -68,11 +89,10 @@ function MenuSearchService($http, ApiBasePath) {
     .then(function(response) {
 
       var matchedItems = [];
-
       for(var item in response.data){
-        //console.log(response.data);
+
         var name = response.data[item].name;
-        if (name.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
+        if ((query !== "") && name.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
           matchedItems.push(response.data[item]);
         }
       }
