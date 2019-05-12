@@ -1,0 +1,59 @@
+<div class="container">
+  <h1 class="text-center">Sign Up!</h1>
+  <fieldset>
+      <form id="regForm" name='regForm' novalidate>
+
+        <input type="text" name="firstname" placeholder="First Name"
+          ng-model="signupCtrl.user.firstname"
+          required>
+          {{ signupCtrl.user.firstname }}
+          <br>
+
+        <input type="text" name="lastname" placeholder="Last Name"
+          ng-model="signupCtrl.user.lastname"
+          required>
+          {{ signupCtrl.user.lastname }}
+          <br>
+
+        <input type="email" name="email" placeholder="Email"
+          ng-model="signupCtrl.user.email"
+          required>
+          <span ng-if="regForm.email.$invalid && regForm.email.$touched">
+            Must be a valid email address: handle@domain format
+          </span>
+          <br>
+
+        <input type="text" name="phone" placeholder="Phone ###-###-####"
+          ng-model="signupCtrl.user.phone"
+          pattern="(\d{3})-(\d{3})-(\d{4})">
+          <span ng-if="regForm.phone.$invalid && regForm.phone.$touched">
+            Phone must be in the format ###-###-####.
+          </span>
+          <br>
+
+        <input type="text" name="favorite" placeholder="Favorite Dish"
+          ng-model="signupCtrl.user.favorite"
+          ng-blur="signupCtrl.verifyFavorite()"
+          required>
+          {{ reg.user.favorite }}
+          <span
+            ng-if="regForm.favorite.$invalid && regForm.favorite.$touched">
+            No such menu number exists!
+          </span>
+          <br>
+
+        <button
+          ng-disabled="regForm.$invalid"
+          ng-click="signupCtrl.submit()">Submit</button>
+      </form>
+    </fieldset>
+
+    <div id="info" ng-if="signupCtrl.completed">
+      First Name: {{ signupCtrl.user.firstname}} <br>
+      Last Name: {{ signupCtrl.user.lastname}} <br>
+      Email: {{ signupCtrl.user.email}} <br>
+      Phone: {{ signupCtrl.user.phone }} <br>
+      Favorite Dish: {{ signupCtrl.user.favorite }} <br>
+    </div>
+
+</div>
